@@ -1,0 +1,6 @@
+.CommentItem {
+  border-bottom: 1px solid gray;
+  padding: 1px;
+  background-color: bisque;
+  cursor: pointer;
+}
