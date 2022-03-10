@@ -5,7 +5,7 @@ import EmotionExample from "./Component/EmotionExample/EmotionExample";
 function App() {
     return (
         <div className="App">
-            <EmotionExample/>
+            <EmotionExample />
             {/*<StyledComponentsExample />*/}
         </div>
     );
