@@ -10,7 +10,7 @@
 // import 'semantic.less';
 // import ReactBootStrapExample from "./Component/ReactBootStrap/ReactBootStrapExample";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import MaterialUIExamlple from "./Component/MaterialUI/MaterialUIExamlple";
+import MaterialUIExample from "./Component/MaterialUI/MaterialUIExample";
 
 function App() {
     return (
@@ -19,7 +19,7 @@ function App() {
         // <AntDesignExample/>
         // <ReactSemanticUIExample />
         // <ReactBootStrapExample/>
-        <MaterialUIExamlple />
+        <MaterialUIExample />
         // </div>
     );
 }

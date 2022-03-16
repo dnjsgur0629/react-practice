@@ -1,6 +1,6 @@
 import React from 'react';
-//create-react-app으로 만든 react app은 /** @jsx jsx */를 사용할 수 없다
-//import {css, jsx} from "@emotion/react";
+//create-react-app으로 만든 react app은 /** @IconLabelButtons.jsx IconLabelButtons.jsx */를 사용할 수 없다
+//import {css, IconLabelButtons.jsx} from "@emotion/react";
 /** @jsxImportSource @emotion/react */ //대신 이걸 사용할 수 있다.
 import {ClassNames, Global, css} from '@emotion/react'
 import styled from "@emotion/styled"; //emotion에서 styled방식을 사용할 수 있게 해줌
