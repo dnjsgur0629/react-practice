@@ -10,19 +10,18 @@
 // import 'semantic.less';
 // import ReactBootStrapExample from "./Component/ReactBootStrap/ReactBootStrapExample";
 // import 'bootstrap/dist/css/bootstrap.min.css';
-import MaterialUIExample from "./Component/MaterialUI/MaterialUIExample";
+// import MaterialUIExamlple from "./Component/MaterialUI/MaterialUIExamlple";
+import TailwindExample from "./Component/TailWind/TailwindExample";
 
 function App() {
     return (
-
         // <div className="App">
         // <OnsenUiExample/>
         // <AntDesignExample/>
         // <ReactSemanticUIExample />
-        <>
-        {/*<ReactBootStrapExample />*/}
-        <MaterialUIExample />
-        </>
+        // <ReactBootStrapExample/>
+        // <MaterialUIExamlple />
+        <TailwindExample/>
         // </div>
     );
 }
