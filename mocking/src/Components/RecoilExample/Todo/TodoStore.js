@@ -5,13 +5,14 @@ export const todoListState = atom({
     default: [],
 });
 
-const todoListFilterState = atom({
+export const todoListFilterState = atom({
     key: 'todoListFilterState',
     default: 'Show All',
-uyㅛ
+});
+
 export const filteredTodoListState = selector({
     key: 'filteredTodoListState',
-    get: ({get}) => {ㅊㅇ
+    get: ({get}) => {
         const filter = get(todoListFilterState);
         const list = get(todoListState);
 
