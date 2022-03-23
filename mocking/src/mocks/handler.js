@@ -41,9 +41,9 @@ export const handlers = [
                 name: `hyeok (${userId})`
             })
         );
-        /*return res(
-            ctx.status(400)
-        );*/
+        // return res(
+        //     ctx.status(404)
+        // );
     }),
 
     rest.put("http://localhost:3000/counter/increment", async (req, res, ctx) => {
