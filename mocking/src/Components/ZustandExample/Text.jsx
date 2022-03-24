@@ -5,7 +5,7 @@ const useStore = create((set) => ({
     fontSize: 14,
     increaseFontSize: () => set((state) => ({fontSize: state.fontSize + 1})),    /*객체를 return*/
     trigger: false,
-    toggleTrigger: () => set((state) => ({trigger: !state.trigger})),
+    toggleTrigger: () => set((state) => ({trigger: !state.trigger}), true),
 }));
 
 function FontLabel() {
