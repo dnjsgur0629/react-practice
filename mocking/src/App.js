@@ -15,11 +15,12 @@ import './App.css';
 // import Cache from "./Components/SWRExample/Cache";
 // import Mutate from "./Components/SWRExample/Mutate";
 // import Pagination from "./Components/SWRExample/Pagination";
-import Example from "./Components/ReactQueryExample/Example";
+// import Example from "./Components/ReactQueryExample/Example";
+//import Pagination from "./Components/ReactQueryExample/Pagination";
+// import QuickStart from "./Components/ReactQueryExample/QuickStart";
 import {QueryClient, QueryClientProvider} from "react-query";
-import QuickStart from "./Components/ReactQueryExample/QuickStart";
 import {ReactQueryDevtools} from 'react-query/devtools'
-import Pagination from "./Components/ReactQueryExample/Pagination";
+import InfiniteScroll from "./Components/ReactQueryExample/InfiniteScroll";
 // import Counter from "./Features/Counter/Counter";
 // import MobxExample from "./Components/MobxExample";
 // import TodoList from "./Components/TodoList";
@@ -56,9 +57,10 @@ function App() {
             {/*<Pagination/>*/}
             <QueryClientProvider client={queryClient}>  {/*Provider에 client로 queryClient주입*/}
                 <ReactQueryDevtools initialIsOpen={false}/>
-                <Example/>
-                <QuickStart/>
-                <Pagination/>
+                {/*<Example/>*/}
+                {/*<QuickStart/>*/}
+                {/*<Pagination/>*/}
+              <InfiniteScroll />
             </QueryClientProvider>
         </div>
     );

@@ -111,7 +111,7 @@ export const handlers = [
         const pageIndex = req.url.searchParams.get("page");
         return res(
             ctx.json({
-                prjects: [
+                projects: [
                     {
                         id: `1 ${pageIndex}`,
                         name: `hyeok-1 (${pageIndex})`
@@ -133,7 +133,8 @@ export const handlers = [
                         name: `hyeok-5 (${pageIndex})`
                     },
                 ],
-                hasMore: pageIndex < 4,
+                hasMore: pageIndex < 4, //4페이지까지만 있음
+                nextCursor: pageIndex < 20 ? parseInt(pageIndex) + 1 : undefined,   //20페이지까지 무한 스크롤
             })
         );
     }),
