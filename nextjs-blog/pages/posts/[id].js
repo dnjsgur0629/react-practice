@@ -43,7 +43,6 @@ export default function Post({postData}) {
 
       alert(data.text);
     };
-
     getText();
   }, []);
 
