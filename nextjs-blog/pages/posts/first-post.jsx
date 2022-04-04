@@ -1,9 +1,20 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Link from 'next/link'
 import Head from 'next/head'
 import Layout from "../../components/Layout";
+import {useRouter} from "next/router";
 
 function FirstPost(props) {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push("/posts/first-post/?counter=10", undefined, {shallow: true});
+  }, [])
+
+  useEffect(()=>{
+    alert(router.query.counter)
+  })
+
   return (
       <Layout>
         <Head>

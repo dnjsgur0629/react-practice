@@ -1,11 +1,11 @@
 import Layout from '../../components/layout'
-import {getAllPostIds, getPostData} from "../../lib/posts";
+import {getPostData} from "../../lib/posts";
 import Head from 'next/head'
 import utilStyles from '../../styles/utils.module.css'
 import {useRouter} from "next/router";
 import {useEffect} from "react";
 
-// 동적 라우팅을 위해 paths를 받아와서 getStaticPaths에서 리턴
+//동적 라우팅을 위해 paths를 받아와서 getStaticPaths에서 리턴
 export async function getStaticPaths() {
   const paths = getAllPostIds()
   return {
@@ -23,13 +23,23 @@ export async function getStaticProps({ params }) {
   }
 }
 
-export default function Post({ postData }) {
+// export async function getServerSideProps({params, req}) {
+//   console.log(`req.cookies: ${JSON.stringify(req.cookies)}`);
+//   const postData = await getPostData(params.id);
+//   return {
+//     props: {
+//       postData,
+//     },
+//   };
+// }
+
+export default function Post({postData}) {
   const router = useRouter();
 
   useEffect(() => {
     const getText = async () => {
       const res = await fetch("/api/hello");
-      const data = await  res.json()
+      const data = await res.json()
 
       alert(data.text);
     };
@@ -37,8 +47,7 @@ export default function Post({ postData }) {
     getText();
   }, []);
 
-
-  if(router.isFallback){
+  if (router.isFallback) {
     return <div>Loading...</div>
   }
 
@@ -50,9 +59,9 @@ export default function Post({ postData }) {
         <article>
           <h1 className={utilStyles.headingXl}>{postData.title}</h1>
           <div className={utilStyles.lightText}>
-            <Date dateString={postData.date} />
+            <Date dateString={postData.date}/>
           </div>
-          <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
+          <div dangerouslySetInnerHTML={{__html: postData.contentHtml}}/>
         </article>
       </Layout>
   )
