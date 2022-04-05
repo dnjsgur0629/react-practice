@@ -4,9 +4,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "cypress": "cypress open",
+    "test" : "jest --watch"
   },
   "dependencies": {
+    "@testing-library/jest-dom": "^5.16.3",
     "date-fns": "^2.28.0",
     "gray-matter": "^4.0.3",
     "next": "latest",
@@ -16,7 +19,9 @@
     "remark-html": "^15.0.1"
   },
   "devDependencies": {
+    "@testing-library/react": "^12.1.2",
     "eslint-config-next": "12.1.4",
-    "eslint-config-prettier": "^8.5.0"
+    "eslint-config-prettier": "^8.5.0",
+    "jest": "^27.5.1"
   }
 }
