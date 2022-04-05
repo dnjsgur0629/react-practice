@@ -26,9 +26,6 @@ function FirstPost(props) {
             <a>return to home</a>
           </Link>
         </h2>
-        <h3>
-          Some modified
-        </h3>
       </Layout>
   );
 }
