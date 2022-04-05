@@ -11,7 +11,7 @@ function FirstPost(props) {
     router.push("/posts/first-post/?counter=10", undefined, {shallow: true});
   }, [])
 
-  useEffect(()=>{
+  useEffect(() => {
     alert(router.query.counter)
   })
 
@@ -26,6 +26,9 @@ function FirstPost(props) {
             <a>return to home</a>
           </Link>
         </h2>
+        <h3>
+          Some modified
+        </h3>
       </Layout>
   );
 }
