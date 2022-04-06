@@ -1,7 +1,7 @@
 // __tests__/index.test.jsx
 
 import {render, screen} from '@testing-library/react'
-import FirstPost from "../pages/posts/first-post";
+import FirstPost from "../src/pages/posts/first-post";
 
 describe('FirstPost', () => {
   it('renders a heading', () => {
