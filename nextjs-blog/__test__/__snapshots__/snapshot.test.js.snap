@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders homepage unchanged 1`] = `
+<div>
+  <div
+    class="container"
+  >
+    <header
+      class="header"
+    >
+      <a
+        href="/"
+      >
+        <span
+          style="box-sizing: border-box; display: inline-block; overflow: hidden; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative; max-width: 100%;"
+        >
+          <span
+            style="box-sizing: border-box; display: block; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; max-width: 100%;"
+          >
+            <img
+              alt=""
+              aria-hidden="true"
+              src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%27138%27%20height=%27108%27/%3e"
+              style="display: block; max-width: 100%; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px;"
+            />
+          </span>
+          <img
+            alt="Choi Wonhyeok"
+            class="borderCircle"
+            data-nimg="intrinsic"
+            decoding="async"
+            src="/_next/image?url=%2Fimages%2Fpepe.jpg&w=384&q=75"
+            srcset="/_next/image?url=%2Fimages%2Fpepe.jpg&w=256&q=75 1x, /_next/image?url=%2Fimages%2Fpepe.jpg&w=384&q=75 2x"
+            style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
+          />
+        </span>
+      </a>
+      <h2
+        class="headingLg"
+      >
+        <a
+          class="colorInherit"
+          href="/"
+        >
+          Choi Wonhyeok
+        </a>
+      </h2>
+    </header>
+    <main>
+      <h1>
+        FirstPage
+      </h1>
+      <h2>
+        <a
+          href="/"
+        >
+          return to home
+        </a>
+      </h2>
+    </main>
+    <div
+      class="backToHome"
+    >
+      <a
+        href="/"
+      >
+        ← Back to home
+      </a>
+    </div>
+  </div>
+</div>
+`;

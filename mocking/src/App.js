@@ -14,9 +14,9 @@ import './App.css';
 // import Profile from "./Components/SWRExample/Profile";
 // import Cache from "./Components/SWRExample/Cache";
 // import Mutate from "./Components/SWRExample/Mutate";
-// import Pagination from "./Components/SWRExample/Pagination";
+// import Pagination.tsx from "./Components/SWRExample/Pagination.tsx";
 // import Example from "./Components/ReactQueryExample/Example";
-//import Pagination from "./Components/ReactQueryExample/Pagination";
+//import Pagination.tsx from "./Components/ReactQueryExample/Pagination.tsx";
 // import QuickStart from "./Components/ReactQueryExample/QuickStart";
 import {QueryClient, QueryClientProvider} from "react-query";
 import {ReactQueryDevtools} from 'react-query/devtools'
@@ -54,12 +54,12 @@ function App() {
             {/*<Scratches/>*/}
             {/*<Fetcher/>*/}
             {/*<Mutate/>*/}
-            {/*<Pagination/>*/}
+            {/*<Pagination.tsx/>*/}
             <QueryClientProvider client={queryClient}>  {/*Provider에 client로 queryClient주입*/}
                 <ReactQueryDevtools initialIsOpen={false}/>
                 {/*<Example/>*/}
                 {/*<QuickStart/>*/}
-                {/*<Pagination/>*/}
+                {/*<Pagination.tsx/>*/}
               <InfiniteScroll />
             </QueryClientProvider>
         </div>
