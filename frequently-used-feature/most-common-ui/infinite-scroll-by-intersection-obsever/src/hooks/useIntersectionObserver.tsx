@@ -8,28 +8,29 @@ function useIntersectionObserver(
       root: null,
       rootMargin: '0px'
     }
-) : IntersectionObserverEntry | undefined {
+): IntersectionObserverEntry | undefined {
   const [entry, setEntry] = useState<IntersectionObserverEntry>();
   const isIntersecting = entry?.isIntersecting;
-
-  useEffect(() => {
-    const target = targetRef?.current
-
-    if(isIntersecting || !target) return; //겹치는 부분이 있거나 target이 없으면 return
-
-    const observer = new IntersectionObserver(updateEntry, options) //그렇지 않으면 새 IntersectionObserver 생성
-
-    observer.observe(target); //target을 관찰
-    return()=>{ //clean
-      observer.disconnect();
-    }
-  }, [targetRef, options.root, options.rootMargin, options.threshold, isIntersecting]);
 
   const updateEntry = (entries: IntersectionObserverEntry[]): void => {
     const [entry] = entries;
     setEntry(entry);
   }
 
+  useEffect(() => {
+    const target = targetRef?.current
+
+    if (isIntersecting || !target) return; //겹치는 부분이 있거나 target이 없으면 return
+
+    const observer = new IntersectionObserver(updateEntry, options) //그렇지 않으면 새 IntersectionObserver 생성
+
+    observer.observe(target); //target을 관찰
+    return () => { //clean
+      observer.disconnect();
+    }
+  }, [targetRef, options.root, options.rootMargin, options.threshold, isIntersecting]);
+
+  return entry
 }
 
-export default useIntersectionObserver()
+export default useIntersectionObserver

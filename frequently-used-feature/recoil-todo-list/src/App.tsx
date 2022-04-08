@@ -23,7 +23,7 @@ function App() {
 
   return (
       <div>
-        {data.title}
+        Hello
       </div>
   );
 }
