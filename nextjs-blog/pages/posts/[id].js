@@ -25,7 +25,7 @@ export async function getStaticProps({ params }) {
 }
 
 // export async function getServerSideProps({params, req}) {
-//   console.log(`req.cookies: ${JSON.stringify(req.cookies)}`);
+//   console.log(`req.cookies: $stringify(req.cookies)}`);
 //   const postData = await getPostData(params.id);
 //   return {
 //     props: {
