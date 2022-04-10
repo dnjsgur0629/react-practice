@@ -1,6 +1,10 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import styled from "@emotion/styled/macro";
 import Modal from '../../componenents/Modal';
+import {useRecoilCallback, useRecoilState, useRecoilValue} from "recoil";
+import {selectedDateState, todoListState} from "../TodoList/atom";
+import {todoFormModalOpenState} from "./atom";
+import {getSimpleDateFormat} from "../../utils";
 
 const ModalBody = styled.div`
   width: 100vw;
@@ -37,20 +41,52 @@ const Card = styled.div`
 `;
 
 const TodoFormModal: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const [todo, setTodo] = useState<string>(''); //작성한 todo는 local state로
+
+  const selectedDate = useRecoilValue(selectedDateState);
+  const todoList = useRecoilValue(todoListState);
+
+  const [isOpen, setIsOpen] = useRecoilState(todoFormModalOpenState);
+
+  const reset = () => { //할 일 초기화
+    setTodo('');
+    inputRef.current?.focus();
+  }
 
   const handleClose = () => setIsOpen(false);
 
+  const addTodo = useRecoilCallback(({ snapshot, set }) => () => {
+    const todoList = snapshot.getLoadable(todoListState).getValue();
+
+    const newTodo = { id: uuidv4(), content: todo, done: false, date: selectedDate };
+
+    set(todoListState, [...todoList, newTodo]);
+  }, [todo, selectedDate, todoList]);
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {  //엔터 눌럿을 때 할 일 추가
+    if (e.key === 'Enter') {
+      addTodo();
+      reset();
+      handleClose();
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTodo(e.target.value);
+  }
+
   return (
       <Modal isOpen={isOpen} onClose={handleClose}>
-        <ModalBody>
+        <Container>
           <Card>
-            <Date>2021-09-12</Date>
-            <InputTodo placeholder="새로운 이벤트"/>
+            <Date>{getSimpleDateFormat(selectedDate)}</Date>
+            <InputTodo ref={inputRef} placeholder="새로운 이벤트" onKeyPress={handleKeyPress} value={todo} onChange={handleChange} />
           </Card>
-        </ModalBody>
+        </Container>
       </Modal>
-  );
+  )
 }
 
 export default TodoFormModal;

@@ -2,6 +2,10 @@ import React, {useState} from 'react';
 import styled from '@emotion/styled/macro';
 import {HiOutlineTrash} from 'react-icons/hi';
 import Modal from "../../componenents/Modal";
+import {useRecoilState, useRecoilValue} from "recoil";
+import {filteredTodoListState, selectedDateState, todoListState} from "../TodoList/atom";
+import {todoStatisticsModalOpenState, todoStatisticsState} from "./atom";
+import {getSimpleDateFormat} from "../../utils";
 
 const ModalBody = styled.div`
   width: 100vw;
@@ -70,27 +74,44 @@ const Card = styled.div`
 `;
 
 const TodoStatisticsModal: React.FC = () => {
+  const [todoList, setTodoList] = useRecoilState(todoListState);
+  const [isOpen, setIsOpen] = useRecoilState(todoStatisticsModalOpenState);
+
+  const selectedDate = useRecoilValue(selectedDateState);
+
+  const filteredTodoList = useRecoilValue(filteredTodoListState(selectedDate));
+  const statistics = useRecoilValue(todoStatisticsState(selectedDate));
+
+  const handleClose = () => setIsOpen(false);
+
+  const removeTodo = (id: string): void => {  //할일 삭제
+    setTodoList(todoList.filter(todo => todo.id !== id));
+  }
+
   return (
       <Modal isOpen={isOpen} onClose={handleClose}>
         <ModalBody>
           <Card>
-            <Date></Date>
-            <Statistics>
-              <TodoList>
-                <TodoItem>
-                  <Content>
-                  </Content>
-                  <TodoActions>
-                    <TodoActionButton>
-                      <HiOutlineTrash/>
-                    </TodoActionButton>
-                  </TodoActions>
-                </TodoItem>
-              </TodoList>
-            </Statistics>
+            <Date>{getSimpleDateFormat(selectedDate)}</Date>
+            <Statistics>할 일 {statistics.total - statistics.done}개 남음</Statistics>
+            <TodoList>
+              {
+                filteredTodoList?.map(todo => (
+                    <TodoItem key={todo.id}>
+                      <Content>{todo.content}</Content>
+                      <TodoActions>
+                        <TodoActionButton secondary onClick={() => removeTodo(todo.id)}>
+                          <HiOutlineTrash />
+                        </TodoActionButton>
+                      </TodoActions>
+                    </TodoItem>
+                ))
+              }
+            </TodoList>
           </Card>
         </ModalBody>
       </Modal>
-  );
+  )
 }
-export default TodoStatisticsModal
+
+export default TodoStatisticsModal;

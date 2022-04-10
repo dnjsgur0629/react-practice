@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "@emotion/styled/macro";
+import {useRecoilValue, useSetRecoilState} from "recoil";
+import {selectedTodoState} from "./atom";
+import {todoStatisticsModalOpenState} from "../TodoStatisticsModal/atom";
 
 interface Todo {
   id: string;
@@ -45,24 +48,47 @@ const Base = styled.ul`
 `;
 
 interface Props {
-  items: Array<Todo>
+  items: Array<Todo>;
 }
 
-const TodoList: React.FC<Props> = ({items}) => {
-  return(
+const MAX_TODO_LIST_LENGTH = 3;
+
+const TodoList: React.FC<Props> = ({ items }) => {
+  const selectedTodo = useRecoilValue(selectedTodoState);
+
+  const setSelectedTodo = useSetRecoilState(selectedTodoState);
+  const setTodoStatisticsModalOpen = useSetRecoilState(todoStatisticsModalOpenState);
+
+  const handleClick = (event: React.SyntheticEvent<HTMLLIElement>, todo: Todo) => { //해당 item을 seleted
+    event.stopPropagation();
+
+    setSelectedTodo(selectedTodo?.id === todo.id && selectedTodo.date === todo.date ? null : todo);
+  }
+
+  const handleTodoStatisticsModalOpen = (event: React.SyntheticEvent<HTMLLIElement>) => { //통계 모달을 염
+    event.stopPropagation();
+
+    setTodoStatisticsModalOpen(true);
+  }
+
+  return (
       <Base>
         {
-          items.slice(0, 3).map((item, idx) => (
-              <TodoItem key={item.id} done={item.done}>{item.content}</TodoItem>
+          items.slice(0, MAX_TODO_LIST_LENGTH).map((item, index) => (
+              <TodoItem
+                  key={item.id}
+                  done={item.done}
+                  selected={item.date === selectedTodo?.date && item.id === selectedTodo?.id}
+                  onClick={(event: React.SyntheticEvent<HTMLLIElement>) => handleClick(event, item)}
+              >
+                {item.content}
+              </TodoItem>
           ))
         }
-        {
-            items.length > 3 && (
-                <EtcItem>{`그 외 ${items.length - 3}`}</EtcItem>
-            )
-        }
+        {items.length > MAX_TODO_LIST_LENGTH && (
+            <EtcItem onClick={handleTodoStatisticsModalOpen}>{`그 외 ${items.length - MAX_TODO_LIST_LENGTH}개...`}</EtcItem>
+        )}
       </Base>
-
   )
 }
 

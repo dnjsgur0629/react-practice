@@ -9,9 +9,12 @@
     "intersection-observer": "^0.12.0",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.34",
-    "react-transition-group": "^4.4.2"
+    "react-transition-group": "^4.4.2",
+    "recoil": "^0.7.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@types/react-transition-group": "^4.4.4"
+    "@types/react-transition-group": "^4.4.4",
+    "@types/uuid": "^8.3.4"
   }
 }
