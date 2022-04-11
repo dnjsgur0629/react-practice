@@ -1,17 +1,32 @@
 import React from 'react';
 import styled from '@emotion/styled/macro';
+import usePokemon from "../hooks/usePokemon";
+import {ListResponse} from "../types";
+import {useNavigate} from "react-router-dom";
+import { formatNumbering, getImageUrl } from '../utils';
 
 const Base = styled.div`
   margin-top: 24px;
 `;
+
+const LoadingWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100vh - 180px);
+`;
+
+const Loading = styled.img``;
 
 const ListItem = styled.li`
   position: relative;
   list-style: none;
   display: flex;
   align-items: center;
-  box-shadow: 6px 4px 14px 5px rgba(0,0,0,0.21);
+  box-shadow: 6px 4px 14px 5px rgba(0, 0, 0, 0.21);
   border-radius: 12px;
+
   & + & {
     margin-top: 18px;
   }
@@ -20,7 +35,7 @@ const ListItem = styled.li`
 const List = styled.ul`
   margin: 0;
   padding: 0;
- `;
+`;
 
 const Image = styled.img``;
 
@@ -45,22 +60,31 @@ const Index = styled.p`
   color: #D1D5DB;
 `;
 
-const getImageUrl = (pokemonIndex: number): string =>
-    `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonIndex}.png`
-
-const formatNumbering = (pokemonIndex: number | string): string =>
-    `#${(typeof pokemonIndex === 'number' ? String(pokemonIndex) : pokemonIndex).padStart(3, '0')}`
-
 const PokemonList: React.FC = () => {
+  const {isLoading, isError, data} = usePokemon<ListResponse>();
+  const push = useNavigate();
+
   return (
       <Base>
-        <List>
-          <ListItem>
-            <Image src={getImageUrl(1)} alt="bulbasaur" />
-            <Name>bulbasaur</Name>
-            <Index>{formatNumbering(1)}</Index>
-          </ListItem>
-        </List>
+        {
+          isLoading || isError ? (
+              <LoadingWrapper>
+                <Loading src="/loading.gif" alt="loading"/>
+              </LoadingWrapper>
+          ) : (
+              <List>
+                { // api로 가져온 pokemon 이름과 id를 가져옴
+                  data?.data.results.map((pokemon, idx) => (
+                      <ListItem key={pokemon.name}>
+                        <Image src={getImageUrl(idx + 1)}/>
+                        <Name>{pokemon.name}</Name>
+                        <Index>{formatNumbering(idx + 1)}</Index>
+                      </ListItem>
+                  ))
+                }
+              </List>
+          )
+        }
       </Base>
   )
 }
