@@ -1,6 +1,7 @@
 import React from 'react';
-import {atom, selector, useRecoilValue} from "recoil";
+import {atom, RecoilRoot, selector, useRecoilValue} from "recoil";
 import axios from "axios";
+import Calendar from "./componenents/Calendar";
 
 const todoIdState = atom({
   key: 'todoIdState',
@@ -11,20 +12,18 @@ const todoItemQuery = selector({
   key: 'todoIdState',
   get: async ({get}) => {
     const id = get(todoIdState);
-    const response = await axios.get(`https://jsonplaceholder.typicode.com/todos/${id}`);
+
+    const response = await axios.get(`https://jsonplaceholder.typicode.com/todos/${id}`)
 
     return response.data;
   }
 })
 
 function App() {
-  const data = useRecoilValue(todoItemQuery);
-
   return (
-      <div>
-        {data.title}
-        {data.userId}
-      </div>
+      <RecoilRoot>
+        <Calendar/>
+      </RecoilRoot>
   );
 }
 
