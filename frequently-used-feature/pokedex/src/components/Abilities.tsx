@@ -1,9 +1,10 @@
-//포켓몬의 기술
+//포켓몬의 능력 (특성)
 import React from 'react';
 import styled from '@emotion/styled/macro';
 
-import { Ability, Color, EffectEntry } from '../types';
-import { mapColorToHex } from '../utils';
+import {Ability, Color, EffectEntry} from '../types';
+import {mapColorToHex} from '../utils';
+import useAbilities from "../hooks/useAbilities";
 
 interface Props {
   abilities: Array<Ability>;
@@ -15,7 +16,7 @@ const Title = styled.h4<{ color: string }>`
   padding: 0;
   font-size: 20px;
   font-weight: bold;
-  color: ${({ color }) => color};
+  color: ${({color}) => color};
 `;
 
 const Base = styled.div`
@@ -30,6 +31,7 @@ const List = styled.ul`
   margin: 20px 0 0 0;
   padding: 0;
   list-style: none;
+
   ${ListItem} + ${ListItem} {
     margin-top: 12px;
   }
@@ -51,15 +53,27 @@ const Description = styled.span`
   word-wrap: break-word;
 `;
 
-const Abilities: React.FC<Props> = ({ color, abilities }) => {
+const Abilities: React.FC<Props> = ({color, abilities}) => {
+  const results = useAbilities(abilities);
+
+  const getEffectEntry = (effectEntries: Array<EffectEntry>) => { // 영문 반환
+    return effectEntries.find(effectEntry => effectEntry.language.name === 'en') || effectEntries[0];
+  };
+
   return (
       <Base>
         <Title color={mapColorToHex(color?.name)}>Abilities</Title>
         <List>
-          <ListItem>
-            <Label>Label</Label>
-            <Description>Description</Description>
-          </ListItem>
+          {
+            results.map(({data}, idx) => (
+                data && (
+                    <ListItem key={idx}>
+                      <Label>{data.data.name}</Label>
+                      <Description>{getEffectEntry(data.data.effect_entries).effect}</Description>
+                    </ListItem>
+                )
+            ))
+          }
         </List>
       </Base>
   )

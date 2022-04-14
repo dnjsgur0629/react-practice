@@ -28,7 +28,7 @@ export function getSortedPostsData() {
   })
 
   // 뽑아온 데이터에는 date 정보가 있는데 그걸 가지고 최신의 것이 먼저 오도록 sorting
-  return allPostsData.sort(({ date: a }, { date: b }) => {
+  return allPostsData.sort(({date: a}, {date: b}) => {
     if (a < b) {
       return 1
     } else if (a > b) {
