@@ -10,7 +10,7 @@ import Stats from '../components/Stats';
 import Evolution from '../components/Evolution';
 
 import {PokemonResponse} from '../types';
-import usePokemon from '../hooks/usePokemon';
+import {usePokemon} from '../hooks/usePokemon';
 import useSpeciesQuery from '../hooks/useSpecies';
 
 type Params = {
@@ -123,7 +123,7 @@ const DetailPage: React.FC = () => {
             selectedTab === 'evolution' && (
                 <Evolution
                     id={id}
-                    isLoading={speciesQueryResult.isLoading || pokemonResult.isLoading}
+                    isLoading={speciesQueryResult.isLoading}
                     color={color}
                     url={evolutionChainUrl}
                 />

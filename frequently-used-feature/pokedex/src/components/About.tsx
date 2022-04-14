@@ -133,7 +133,7 @@ const About: React.FC<Props> = ({
         {
           isLoading ? (
               <ImageWrapper>
-                <Image src="/loading.gif" />
+                <Image src="assets/loading.gif" />
               </ImageWrapper>
           ) : (
               <>

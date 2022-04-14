@@ -75,7 +75,7 @@ const Stats: React.FC<Props> = ({ stats, color }) => (
                 <Name>{stat.name === 'hp' ? stat.name.toUpperCase() : stat.name}</Name>
                 <Amount>{base_stat}</Amount>
                 <GaugeWrapper>
-                  <Gauge percentage={(base_stat / 255) * 100} color={mapColorToHex(color?.name)} />
+                  <Gauge percentage={(base_stat / 255) * 100} color={mapColorToHex(color?.name)} /> {/*stat의 최대값:255*/}
                 </GaugeWrapper>
               </ListItem>
           ))

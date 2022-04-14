@@ -4,12 +4,13 @@ import styled from '@emotion/styled/macro';
 import {Chain, Color} from '../types';
 import EvolutionStage from './EvolutionStage';
 import {mapColorToHex} from '../utils';
+import useEvolutionChain from "../hooks/useEvolutionChain";
 
 type Props = {
   isLoading: boolean;
   id?: string;
   color?: Color;
-  url?: string; //evolution 정보를 가져오는 api
+  url?: string;
 }
 
 const Base = styled.div`
@@ -43,12 +44,12 @@ const List = styled.ul`
   list-style: none;
   margin: 20px 0 0 0;
   padding: 0;
+
   > li + li {
     margin-top: 24px;
   }
 `;
 
-//진화 정보는 없을 수도 있다.
 const EmptyWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -62,17 +63,56 @@ const Empty = styled.div<{ color: string }>`
 `;
 
 const Evolution: React.FC<Props> = ({url, color}) => {
+  const {isSuccess, isError, isLoading, data} = useEvolutionChain(url);
+
+  const [evolutionChain, setEvolutionChain] = useState<Array<{ from: { name: string; url: string }, to: { name: string; url: string }, level: number }>>([]);
+
+  useEffect(() => {
+    const makeEvolutionChain = (chain: Chain) => {
+      if (chain.evolves_to.length) {
+        const [evolvesTo] = chain.evolves_to;
+
+        const from = chain.species;
+        const to = evolvesTo.species;
+        const level = evolvesTo.evolution_details[0].min_level;
+
+        setEvolutionChain(prev => [...prev, {from, to, level}]);
+
+        makeEvolutionChain(chain.evolves_to[0]);
+      }
+    }
+
+    isSuccess && data && makeEvolutionChain(data.data.chain);
+
+    return (): void => {
+      setEvolutionChain([]);
+    }
+  }, [isSuccess, data]);
+
   return (
       <Base>
         <Title color={mapColorToHex(color?.name)}>Evolution</Title>
-        <ImageWrapper>
-          <Image/>
-        </ImageWrapper>
-        <List>
-        </List>
-        <EmptyWrapper>
-          <Empty color={mapColorToHex(color?.name)}>This Pokémon does not evolve.</Empty>
-        </EmptyWrapper>
+        {
+          isLoading || isError ? (
+              <ImageWrapper>
+                <Image src="assets/loading.gif"/>
+              </ImageWrapper>
+          ) : (
+              evolutionChain.length ? (
+                  <List>
+                    {
+                      evolutionChain.map(({from, to, level}, idx) => (
+                          <EvolutionStage key={idx} from={from} to={to} level={level} color={color}/>
+                      ))
+                    }
+                  </List>
+              ) : (
+                  <EmptyWrapper>
+                    <Empty color={mapColorToHex(color?.name)}>This Pokémon does not evolve.</Empty>
+                  </EmptyWrapper>
+              )
+          )
+        }
       </Base>
   )
 }

@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled/macro';
-import usePokemon from "../hooks/usePokemon";
+import {usePokemon} from "../hooks/usePokemon";
 import {ListResponse} from "../types";
 import {useNavigate} from "react-router-dom";
-import { formatNumbering, getImageUrl } from '../utils';
+import {formatNumbering, getImageUrl} from '../utils';
 
 const Base = styled.div`
   margin-top: 24px;
@@ -69,12 +69,13 @@ const PokemonList: React.FC = () => {
         {
           isLoading || isError ? (
               <LoadingWrapper>
-                <Loading src="/loading.gif" alt="loading"/>
+                <Loading src="assets/loading.gif" alt="loading"/>
               </LoadingWrapper>
           ) : (
               <List>
                 { // api로 가져온 pokemon 이름과 id를 가져옴
-                  data?.data.results.map((pokemon, idx) => (
+                  data?.data.results.map((pokemon: { name: {} | null | undefined; }, idx: number) => (
+                      //@ts-ignore
                       <ListItem key={pokemon.name}>
                         <Image src={getImageUrl(idx + 1)}/>
                         <Name>{pokemon.name}</Name>
