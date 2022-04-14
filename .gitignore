@@ -148,3 +148,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# enviroment variables
+.env
