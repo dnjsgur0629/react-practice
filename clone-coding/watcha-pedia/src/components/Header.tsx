@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from "@emotion/styled";
 import {AiOutlineSearch} from "react-icons/ai";
+import useMovieSearch from "../features/movie/useMovieSearch";
 
 const Base = styled.header`
   position: fixed;
@@ -36,6 +37,7 @@ const Menu = styled.li`
   align-items: center;
   height: 62px;
   flex-shrink: 0;
+
   &:not(:first-child) {
     margin: 0 0 0 24px;
   }
@@ -43,7 +45,7 @@ const Menu = styled.li`
 
 const MenuButton = styled.button<{ active?: boolean }>`
   font-size: 15px;
-  color: ${({ active }) => active ? 'rgb(53, 53, 53)' : 'rgb(126, 126, 126)'};
+  color: ${({active}) => active ? 'rgb(53, 53, 53)' : 'rgb(126, 126, 126)'};
   cursor: pointer;
   border: none;
   background: none;
@@ -68,9 +70,11 @@ const Link = styled.a`
 const TextLogo = styled.h1`
   font-size: 24px;
   font-weight: 700;
+
   > span[class="primary"] {
     color: rgb(255, 47, 110);
   }
+
   > span:not(.primary) {
     color: #222;
   }
@@ -79,6 +83,44 @@ const TextLogo = styled.h1`
 const SearchContainer = styled.div`
   position: relative;
   width: 100%;
+`;
+
+const SearchResultWrapper = styled.div`
+  position: absolute;
+  top: 60px;
+  left: 0;
+  z-index: 9999999;
+  background-color: #fff;
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+  max-height: 480px;
+  overflow-y: scroll;
+`;
+
+const SearchResultListItem = styled.li`
+  padding: 4px 6px;
+  box-sizing: border-box;
+  color: #222;
+  font-size: 16px;
+  width: 100%;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: #eee;
+  }
+`;
+
+const SearchResultList = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 0;
 `;
 
 const SearchFormWrapper = styled.div``;
@@ -134,12 +176,17 @@ const SignUp = styled.button`
   margin: 15px 0;
 `;
 
-interface Props {}
+interface Props {
+}
 
 const Header: React.FC<Props> = () => {
-  const handleKeyword = () => {
-    console.log("handle keyword")
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const {data: searchResult} = useMovieSearch(searchKeyword);
+
+  const handleKeyword = (event: React.ChangeEvent<HTMLInputElement>): void => { //search input에 값을 변경할 때마다 searchKeyword를 set
+    setSearchKeyword(event.target.value);
   }
+
   return (
       <Base>
         <Navigation>
@@ -168,7 +215,7 @@ const Header: React.FC<Props> = () => {
                   <SearchFormWrapper>
                     <SearchForm>
                       <SearchLabel>
-                        <AiOutlineSearch />
+                        <AiOutlineSearch/>
                         <SearchInput
                             placeholder="콘텐츠, 인물, 컬렉션, 유저를 검색해보세요."
                             onChange={handleKeyword}
@@ -177,6 +224,17 @@ const Header: React.FC<Props> = () => {
                     </SearchForm>
                   </SearchFormWrapper>
                 </SearchContainer>
+                <SearchResultWrapper>
+                  <SearchResultList>
+                    {
+                      searchResult?.data.results.map(movie => (
+                          <Link key={movie.id} href={`/movie/${movie.id}`}>
+                            <SearchResultListItem>{movie.title}</SearchResultListItem>
+                          </Link>
+                      ))
+                    }
+                  </SearchResultList>
+                </SearchResultWrapper>
               </SearchMenu>
               <Menu>
                 <SignIn>로그인</SignIn>
